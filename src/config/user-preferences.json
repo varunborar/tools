@@ -1,0 +1,10 @@
+{
+  "menu": [
+    { "type": "link", "label": "Settings", "href": "/settings", "icon": "Cog" },
+    { "type": "theme", "label": "Theme", "iconLight": "Sun", "iconDark": "Moon" },
+    { "type": "link", "label": "Buy me a coffee", "href": "http://buymeacoffee.com/varunborar", "icon": "Coffee", "external": true, "group": "support" },
+    { "type": "link", "label": "Contribute on GitHub", "href": "https://github.com/varunborar/tools", "icon": "Github", "external": true, "group": "support" }
+  ]
+}
+
+

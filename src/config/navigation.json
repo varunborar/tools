@@ -1,0 +1,97 @@
+{
+  "brand": {
+    "name": "The Big Studio",
+    "logoSrc": "/logo-new.png",
+    "homeHref": "/"
+  },
+  "user": {
+    "name": "Guest",
+    "email": "guest@example.com",
+    "avatar": "/avatars/shadcn.jpg"
+  },
+  "workspaces": [
+    {
+      "name": "The Big Studio",
+      "logo": "GalleryVerticalEnd",
+      "plan": "Enterprise",
+      "sections": [
+        {
+          "label": "Platform",
+          "services": [
+            {
+              "title": "Playground",
+              "href": "/playground",
+              "icon": "SquareTerminal",
+              "features": [
+                { "title": "History", "href": "/playground/history" },
+                { "title": "Starred", "href": "/playground/starred" }
+              ]
+            },
+            {
+              "title": "Models",
+              "href": "/models",
+              "icon": "Bot",
+              "features": [
+                { "title": "Genesis", "href": "/models/genesis" },
+                { "title": "Explorer", "href": "/models/explorer" }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Docs",
+          "services": [
+            {
+              "title": "Documentation",
+              "href": "/docs",
+              "icon": "BookOpen",
+              "features": [
+                { "title": "Introduction", "href": "/docs" },
+                { "title": "Tutorials", "href": "/docs/tutorials" }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Settings",
+          "services": [
+            {
+              "title": "Preferences",
+              "href": "/settings",
+              "icon": "Settings2",
+              "features": [
+                { "title": "General", "href": "/settings" },
+                { "title": "Billing", "href": "/settings/billing" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sandbox",
+      "logo": "AudioWaveform",
+      "plan": "Starter",
+      "sections": [
+        {
+          "label": "Play",
+          "services": [
+            {
+              "title": "Playground",
+              "href": "/playground",
+              "icon": "SquareTerminal",
+              "features": [
+                { "title": "History", "href": "/playground/history" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "breadcrumbs": [
+    { "title": "Home", "href": "/" }
+  ]
+}
+
+
