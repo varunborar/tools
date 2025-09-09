@@ -14,11 +14,14 @@ import navConfig from "@/config/navigation.json" assert { type: "json" };
 import { usePathname } from "next/navigation";
 import { buildBreadcrumbs } from "@/lib/breadcrumbs";
 import { useWorkspace } from "@/contexts/workspace";
+import * as React from "react";
 
 export function AppHeader() {
   const pathname = usePathname();
   const { activeIndex } = useWorkspace();
   const crumbs = buildBreadcrumbs({ pathname, teams: navConfig.workspaces, activeTeamIndex: activeIndex });
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -27,7 +30,7 @@ export function AppHeader() {
         <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
         <Breadcrumb className="min-w-0">
           <BreadcrumbList className="flex min-w-0 items-center gap-1 overflow-hidden">
-            {crumbs.map((bc, idx) => [
+            {mounted && crumbs.map((bc, idx) => [
               (
                 <BreadcrumbItem
                   key={`crumb-${idx}`}

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import navConfig from "@/config/navigation.json" assert { type: "json" };
 
 const WorkspaceContext = React.createContext(null);
 
@@ -11,7 +12,64 @@ export function useWorkspace() {
 }
 
 export function WorkspaceProvider({ children, initialIndex = 0 }) {
-  const [activeIndex, setActiveIndex] = React.useState(initialIndex);
+  const STORAGE_INDEX = "active_workspace_index";
+  const STORAGE_NAME = "active_workspace_name";
+
+  const getIndexByName = (name) => {
+    if (!name) return -1;
+    const list = (navConfig.workspaces ?? []).map((w) => w.name.toLowerCase());
+    return list.indexOf(String(name).toLowerCase());
+  };
+
+  const getInitialIndex = () => {
+    const total = (navConfig.workspaces ?? []).length;
+    const clamp = (idx) => {
+      if (total <= 0) return 0;
+      if (Number.isNaN(idx) || idx == null) return 0;
+      return Math.max(0, Math.min(idx, total - 1));
+    };
+    if (typeof window === "undefined") return initialIndex;
+    try {
+      const url = new URL(window.location.href);
+      const fromQuery = url.searchParams.get("ws");
+      let candidate = fromQuery;
+      if (!candidate && url.hash) {
+        const m = url.hash.match(/ws=([^&]+)/);
+        if (m) candidate = decodeURIComponent(m[1]);
+      }
+      if (candidate) {
+        const idx = getIndexByName(candidate);
+        if (idx >= 0) return clamp(idx);
+      }
+      const storedName = window.localStorage.getItem(STORAGE_NAME);
+      if (storedName) {
+        const idx = getIndexByName(storedName);
+        if (idx >= 0) return clamp(idx);
+      }
+      const storedIdx = parseInt(window.localStorage.getItem(STORAGE_INDEX) ?? "", 10);
+      if (!Number.isNaN(storedIdx)) return clamp(storedIdx);
+    } catch {}
+    return clamp(initialIndex);
+  };
+
+  const [activeIndex, setActiveIndex] = React.useState(getInitialIndex);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const total = (navConfig.workspaces ?? []).length;
+      if (total > 0 && (activeIndex < 0 || activeIndex > total - 1)) {
+        setActiveIndex(0);
+        return;
+      }
+      const name = navConfig.workspaces?.[activeIndex]?.name;
+      window.localStorage.setItem(STORAGE_INDEX, String(activeIndex));
+      if (name) window.localStorage.setItem(STORAGE_NAME, name);
+      const url = new URL(window.location.href);
+      if (name) url.hash = `ws=${encodeURIComponent(name)}`;
+      window.history.replaceState(null, "", url.toString());
+    } catch {}
+  }, [activeIndex]);
 
   const value = React.useMemo(() => ({ activeIndex, setActiveIndex }), [activeIndex]);
 

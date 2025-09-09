@@ -4,93 +4,28 @@
     "logoSrc": "/logo-new.png",
     "homeHref": "/"
   },
-  "user": {
-    "name": "Guest",
-    "email": "guest@example.com",
-    "avatar": "/avatars/shadcn.jpg"
-  },
   "workspaces": [
     {
       "name": "The Big Studio",
+      "basePath": "",
       "logo": "GalleryVerticalEnd",
-      "plan": "Enterprise",
+      "plan": "Tools & More",
       "sections": [
         {
-          "label": "Platform",
+          "label": "Utils",
           "services": [
             {
-              "title": "Playground",
-              "href": "/playground",
-              "icon": "SquareTerminal",
+              "title": "Networking",
+              "href": "/networking",
+              "icon": "Network",
               "features": [
-                { "title": "History", "href": "/playground/history" },
-                { "title": "Starred", "href": "/playground/starred" }
-              ]
-            },
-            {
-              "title": "Models",
-              "href": "/models",
-              "icon": "Bot",
-              "features": [
-                { "title": "Genesis", "href": "/models/genesis" },
-                { "title": "Explorer", "href": "/models/explorer" }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "Docs",
-          "services": [
-            {
-              "title": "Documentation",
-              "href": "/docs",
-              "icon": "BookOpen",
-              "features": [
-                { "title": "Introduction", "href": "/docs" },
-                { "title": "Tutorials", "href": "/docs/tutorials" }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "Settings",
-          "services": [
-            {
-              "title": "Preferences",
-              "href": "/settings",
-              "icon": "Settings2",
-              "features": [
-                { "title": "General", "href": "/settings" },
-                { "title": "Billing", "href": "/settings/billing" }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Sandbox",
-      "logo": "AudioWaveform",
-      "plan": "Starter",
-      "sections": [
-        {
-          "label": "Play",
-          "services": [
-            {
-              "title": "Playground",
-              "href": "/playground",
-              "icon": "SquareTerminal",
-              "features": [
-                { "title": "History", "href": "/playground/history" }
+                { "title": "Subnetting (CIDR)", "href": "/networking/subnetting" }
               ]
             }
           ]
         }
       ]
     }
-  ],
-  "breadcrumbs": [
-    { "title": "Home", "href": "/" }
   ]
 }
 

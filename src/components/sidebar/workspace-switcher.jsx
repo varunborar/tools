@@ -14,15 +14,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function WorkspaceSwitcher({ teams, brand, value, onValueChange }) {
   const { isMobile, state } = useSidebar();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const router = useRouter();
   const [uncontrolledIndex, setUncontrolledIndex] = React.useState(0);
   const index = typeof value === "number" ? value : uncontrolledIndex;
   const setIndex = onValueChange ?? setUncontrolledIndex;
   const activeTeam = teams?.[index];
 
-  if (!teams || teams.length === 0 || !activeTeam) return null;
+  if (!mounted || !teams || teams.length === 0 || !activeTeam) return null;
 
   return (
     <SidebarMenu>
@@ -64,19 +69,20 @@ export function WorkspaceSwitcher({ teams, brand, value, onValueChange }) {
             <DropdownMenuLabel className="text-muted-foreground text-xs">
               Workspaces
             </DropdownMenuLabel>
-            {teams.map((team, idx) => (
-              <DropdownMenuItem
-                key={team.name}
-                onClick={() => setIndex(idx)}
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
-                </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{idx + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
+            {teams.map((team, idx) => {
+              const base = team.basePath ?? "";
+              const href = base || "/";
+              return (
+                <DropdownMenuItem key={team.name} asChild className="gap-2 p-2">
+                  <Link href={href} onClick={() => setIndex(idx)}>
+                    <div className="flex size-6 items-center justify-center rounded-md border">
+                      <team.logo className="size-3.5 shrink-0" />
+                    </div>
+                    {team.name}
+                  </Link>
+                </DropdownMenuItem>
+              );
+            })}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

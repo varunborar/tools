@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/sidebar";
 
 export function AppSidebar(props) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
   const teams = (navConfig.workspaces ?? []).map((t) => ({
     ...t,
     logo: getLucideIconByName(t.logo),
@@ -42,7 +44,7 @@ export function AppSidebar(props) {
         />
       </SidebarHeader>
       <SidebarContent>
-        {activeTeam?.sections?.map((section) => (
+        {mounted && activeTeam?.sections?.map((section) => (
           <NavMain key={section.label} sectionLabel={section.label} services={section.services} />
         ))}
       </SidebarContent>

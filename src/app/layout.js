@@ -5,6 +5,7 @@ import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { AppHeader } from "@/components/app-header";
 import { WorkspaceProvider } from "@/contexts/workspace";
 import { ThemeProvider } from "next-themes";
+import { CommandBar } from "@/components/command-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                   {children}
                 </div>
+                <CommandBar />
               </SidebarInset>
             </WorkspaceProvider>
           </SidebarProvider>
