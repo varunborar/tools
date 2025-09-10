@@ -19,8 +19,54 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Tools | The Big Studio",
-  description: "Utilities for everyone",
+  metadataBase: new URL("https://thebigstudio.in"),
+  title: {
+    default: "The Big Studio",
+    template: "%s | The Big Studio",
+  },
+  description: "Making software accessible to everyone",
+  applicationName: "The Big Studio",
+  keywords: [
+    "tools",
+    "utilities",
+    "networking",
+    "security",
+    "subnetting",
+    "password generator",
+    "base64",
+  ],
+  authors: [{ name: "The Big Studio", url: "https://thebigstudio.in" }],
+  creator: "The Big Studio",
+  publisher: "The Big Studio",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "The Big Studio",
+    title: "The Big Studio",
+    description: "Making software accessible to everyone",
+    images: [
+      {
+        url: "/logo-new.png",
+        width: 1200,
+        height: 630,
+        alt: "The Big Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Big Studio",
+    description: "Making software accessible to everyone",
+    images: ["/logo-new.png"],
+    creator: "@thebigstudio",
+  },
 };
 
 export default function RootLayout({ children }) {
