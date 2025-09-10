@@ -9,6 +9,9 @@ export default function AppTabs({ instances, activeId, onCreate, onClose, onActi
   const [editingId, setEditingId] = React.useState(null);
   const [editingValue, setEditingValue] = React.useState("");
   const inputRef = React.useRef(null);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (editingId && inputRef.current) {
@@ -32,10 +35,10 @@ export default function AppTabs({ instances, activeId, onCreate, onClose, onActi
   return (
     <div className="flex flex-1 min-h-0 min-w-0 flex-col gap-2">
       <div className="flex-1 min-h-0 min-w-0">
-        <Tabs value={value} onValueChange={onActivate} className="h-full w-full">
+        <Tabs value={mounted ? value : undefined} onValueChange={onActivate} className="h-full w-full">
           <div className="w-full overflow-x-auto min-w-0">
             <TabsList className="flex w-max whitespace-nowrap justify-start gap-1">
-              {instances.map((inst) => (
+              {mounted ? instances.map((inst) => (
                 <div key={inst.id} className="flex items-center">
                   <TabsTrigger value={inst.id} className="flex-none px-2" onDoubleClick={() => startEditing(inst)}>
                     {editingId === inst.id ? (
@@ -59,16 +62,18 @@ export default function AppTabs({ instances, activeId, onCreate, onClose, onActi
                     <X />
                   </Button>
                 </div>
-              ))}
-              <Button variant="outline" size="sm" onClick={onCreate} className="ml-2 flex-none">New</Button>
+              )) : null}
+              {mounted ? (
+                <Button variant="outline" size="sm" onClick={onCreate} className="ml-2 flex-none">New</Button>
+              ) : null}
             </TabsList>
           </div>
           <div className="flex-1 min-h-0">
-            {instances.map((inst) => (
+            {mounted ? instances.map((inst) => (
               <TabsContent key={inst.id} value={inst.id} className="h-full w-full pt-2">
                 {renderContent(inst)}
               </TabsContent>
-            ))}
+            )) : null}
           </div>
         </Tabs>
       </div>
