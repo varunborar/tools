@@ -20,7 +20,7 @@ import * as React from "react";
 
 export function AppHeader() {
   const pathname = usePathname();
-  const { activeIndex } = useWorkspace();
+  const { activeIndex, setActiveIndex } = useWorkspace();
   const crumbs = buildBreadcrumbs({ pathname, teams: navConfig.workspaces, activeTeamIndex: activeIndex });
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
@@ -41,7 +41,11 @@ export function AppHeader() {
                     className={idx === 0 ? "hidden md:block" : undefined}
                   >
                     {idx < crumbs.length - 1 ? (
-                      <BreadcrumbLink href={bc.href} className="truncate max-w-[16ch] align-middle">
+                      <BreadcrumbLink
+                        href={bc.href}
+                        className="truncate max-w-[16ch] align-middle"
+                        onClick={idx === 0 ? () => setActiveIndex(0) : undefined}
+                      >
                         {bc.title}
                       </BreadcrumbLink>
                     ) : (

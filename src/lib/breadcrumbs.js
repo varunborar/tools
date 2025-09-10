@@ -11,10 +11,22 @@ export function buildBreadcrumbs({ pathname, teams, activeTeamIndex }) {
   const team = teams?.[activeTeamIndex];
   if (!team) return crumbs;
 
+  // Workspace base path crumb (e.g., "/apps" -> "Apps")
+  const basePath = team.basePath || "";
+  const baseSeg = String(basePath).replace(/^\//, "").split("/")[0] || "";
+  if (baseSeg) {
+    const baseHref = basePath || `/${baseSeg}`;
+    crumbs.push({ title: humanize(baseSeg), href: baseHref });
+  }
+
   // Try to match the longest feature/service prefix to label nicely
   let accum = "";
   segments.forEach((seg, idx) => {
     accum += `/${seg}`;
+    // Skip adding a duplicate crumb for the workspace base segment
+    if (idx === 0 && baseSeg && seg.toLowerCase() === baseSeg.toLowerCase()) {
+      return;
+    }
     const match = findMatchInTeam(team, accum);
     if (match) {
       const isLast = idx === segments.length - 1;
