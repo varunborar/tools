@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import navConfig from "@/config/navigation.json" assert { type: "json" };
 import { useWorkspace } from "@/contexts/workspace";
 import { getLucideIconByName } from "@/lib/icon-map";
@@ -18,10 +18,12 @@ import {
 
 // Pluggable custom commands
 import { getCustomCommands } from "@/commands/custom-commands";
+import { getAppCommands } from "@/apps/core/commands";
 
 export function CommandBar() {
   const router = useRouter();
   const { activeIndex } = useWorkspace();
+  const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
 
   // Toggle with Cmd/Ctrl+M
@@ -67,6 +69,7 @@ export function CommandBar() {
   // Prepare filtered custom commands for active workspace
   const ws = (navConfig.workspaces ?? [])[activeIndex];
   const customCommands = React.useMemo(() => getCustomCommands({ redirectTo, setOpen, activeWorkspace: ws }), [redirectTo, setOpen, ws]);
+  const appCommands = React.useMemo(() => getAppCommands({ pathname, setOpen }), [pathname, setOpen]);
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen} title="Command Bar" description="Search commands">
@@ -82,11 +85,11 @@ export function CommandBar() {
             </CommandItem>
           ))}
         </CommandGroup>
-        {customCommands.length > 0 && (
+        {(customCommands.length > 0 || appCommands.length > 0) && (
           <>
             <CommandSeparator />
             <CommandGroup heading="Commands">
-              {customCommands.map((cmd) => (
+              {[...appCommands, ...customCommands].map((cmd) => (
                 <CommandItem key={cmd.id} onSelect={cmd.run}>
                   {cmd.icon ? <cmd.icon /> : null}
                   <span className="truncate">{cmd.label}</span>

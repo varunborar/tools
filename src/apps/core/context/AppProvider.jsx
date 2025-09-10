@@ -90,15 +90,23 @@ export function AppProvider({ appId, schemaVersion = "1", defaults = {}, storage
   }
 
   function importIntoInstance(targetId, json) {
-    if (!json || json.appId !== appId) return { ok: false, error: "Invalid appId" };
-    const id = targetId || generateId();
-    const now = new Date().toISOString();
-    if (!targetId) {
-      setInstances((prev) => [...prev, { id, name: json.instance?.name || "Imported", createdAt: now, updatedAt: now }]);
+    try {
+      const payload = typeof json === "string" ? JSON.parse(json) : json;
+      if (!payload || payload.appId !== appId) return { ok: false, error: "Invalid appId" };
+      const id = targetId || generateId();
+      const now = new Date().toISOString();
+      if (!targetId) {
+        setInstances((prev) => [...prev, { id, name: payload.instance?.name || "Imported", createdAt: now, updatedAt: now }]);
+      } else {
+        // update timestamp
+        setInstances((prev) => prev.map((i) => i.id === id ? { ...i, updatedAt: now } : i));
+      }
+      setInstanceData(id, payload.instance?.data ?? {});
+      setActiveInstanceId(id);
+      return { ok: true, id };
+    } catch (e) {
+      return { ok: false, error: String(e) };
     }
-    setInstanceData(id, json.instance?.data ?? {});
-    setActiveInstanceId(id);
-    return { ok: true, id };
   }
 
   const value = React.useMemo(() => ({

@@ -15,22 +15,22 @@ function MenusWrapper({ children }) {
     {
       label: "File",
       items: [
-        { id: "new-instance", label: "New", shortcut: "⌘N" },
-        { id: "import", label: "Import…", shortcut: "⌘O" },
-        { id: "export", label: "Export…", shortcut: "⌘S" },
+        { id: "new-instance", label: "New" },
+        { id: "import", label: "Import" },
+        { id: "export", label: "Export" },
       ],
     },
     {
       label: "Edit",
       items: [
-        { id: "add-todo", label: "Add Todo", shortcut: "⌘T" },
+        { id: "add-todo", label: "Add Todo" },
       ],
     },
     {
       label: "Settings",
       items: [
-        { id: "add-status", label: "Add Status" },
-        { id: "add-custom-field", label: "Add Custom Field" },
+        { id: "manage-statuses", label: "Manage Statuses" },
+        { id: "manage-custom-fields", label: "Manage Custom Fields" },
       ],
     },
   ]), []);
@@ -44,12 +44,12 @@ function MenusWrapper({ children }) {
       editorRef.current?.openAddTodo?.();
       return;
     }
-    if (id === "add-status") {
-      editorRef.current?.addStatus?.();
+    if (id === "manage-statuses") {
+      editorRef.current?.openManageStatuses?.();
       return;
     }
-    if (id === "add-custom-field") {
-      editorRef.current?.addCustomField?.();
+    if (id === "manage-custom-fields") {
+      editorRef.current?.openManageCustomFields?.();
       return;
     }
     if (id === "export") {
@@ -63,12 +63,24 @@ function MenusWrapper({ children }) {
     }
   }, [app]);
 
+  // Bridge command-bar app commands via window events
+  React.useEffect(() => {
+    const handler = (e) => {
+      const { appId, action } = e.detail || {};
+      if (appId !== "todo") return;
+      onAction(action);
+    };
+    window.addEventListener("app-command", handler);
+    return () => window.removeEventListener("app-command", handler);
+  }, [onAction]);
+
   const onPickFile = React.useCallback(async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
       const json = await readJsonFromFile(file);
-      app.importIntoInstance(app.activeInstanceId, json);
+      // Import into a NEW instance (new tab) using the file's data
+      app.importIntoInstance(undefined, json);
     } finally {
       e.target.value = "";
     }

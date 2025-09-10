@@ -10,6 +10,7 @@ export default function AppFrame({ menus, onAction, renderInstance }) {
     activeInstanceId,
     createInstance,
     closeInstance,
+    renameInstance,
     setActiveInstance,
   } = useApp();
 
@@ -21,6 +22,7 @@ export default function AppFrame({ menus, onAction, renderInstance }) {
         activeId={activeInstanceId}
         onCreate={() => createInstance()}
         onClose={closeInstance}
+        onRename={renameInstance}
         onActivate={setActiveInstance}
         renderContent={(inst) => renderInstance(inst)}
       />

@@ -6,7 +6,6 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarSub,
   MenubarSubContent,
   MenubarSubTrigger,
@@ -37,7 +36,6 @@ export default function AppMenubar({ menus = [], onAction }) {
                         ) : (
                           <MenubarItem key={`${sub.id}-${kdx}`} disabled={sub.disabled} onClick={() => handle(sub.id)}>
                             {sub.label}
-                            {sub.shortcut ? <MenubarShortcut>{sub.shortcut}</MenubarShortcut> : null}
                           </MenubarItem>
                         )
                       ))}
@@ -48,7 +46,6 @@ export default function AppMenubar({ menus = [], onAction }) {
               return (
                 <MenubarItem key={`${it.id}-${jdx}`} disabled={it.disabled} onClick={() => handle(it.id)}>
                   {it.label}
-                  {it.shortcut ? <MenubarShortcut>{it.shortcut}</MenubarShortcut> : null}
                 </MenubarItem>
               );
             })}
