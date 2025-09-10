@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "predeploy": "next build",
-    "deploy": "gh-pages -d out -t --nojekyll --cname tools.thebigstudio.in"
+    "deploy": "gh-pages -d out -t --nojekyll --cname www.thebigstudio.in"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

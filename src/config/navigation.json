@@ -27,7 +27,8 @@
               "href": "/security",
               "icon": "LockKeyhole",
               "features": [
-                { "title": "Password Generator", "href": "/security/password-generator" }
+                { "title": "Password Generator", "href": "/security/password-generator" },
+                { "title": "Base64", "href": "/security/base64" }
               ]
             }
           ]

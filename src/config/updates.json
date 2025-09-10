@@ -1,0 +1,16 @@
+{
+    "updates": [
+        {
+            "title": "Base64 encoder/decoder added",
+            "description": "New Base64 tool with encode/decode tabs under Security.",
+            "link": "/security/base64",
+            "date": "2025-09-10"
+        },
+        {
+            "title": "Map.ly 2.0.0 is out now",
+            "description": "Revamped extension to make url management easier",
+            "link": "https://chromewebstore.google.com/detail/maply/caianbbcadikholclndbbfaickaifhhb?source=tools",
+            "date": "2025-05-12"
+        }
+    ]
+}
