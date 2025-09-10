@@ -21,6 +21,14 @@
               "features": [
                 { "title": "Subnetting (CIDR)", "href": "/networking/subnetting" }
               ]
+            },
+            {
+              "title": "Security",
+              "href": "/security",
+              "icon": "LockKeyhole",
+              "features": [
+                { "title": "Password Generator", "href": "/security/password-generator" }
+              ]
             }
           ]
         }
