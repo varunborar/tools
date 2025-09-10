@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import navigation from "@/config/navigation.json";
 import updates from "@/config/updates.json";
 
