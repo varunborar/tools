@@ -30,17 +30,6 @@ export function WorkspaceProvider({ children, initialIndex = 0 }) {
     };
     if (typeof window === "undefined") return initialIndex;
     try {
-      const url = new URL(window.location.href);
-      const fromQuery = url.searchParams.get("ws");
-      let candidate = fromQuery;
-      if (!candidate && url.hash) {
-        const m = url.hash.match(/ws=([^&]+)/);
-        if (m) candidate = decodeURIComponent(m[1]);
-      }
-      if (candidate) {
-        const idx = getIndexByName(candidate);
-        if (idx >= 0) return clamp(idx);
-      }
       const storedName = window.localStorage.getItem(STORAGE_NAME);
       if (storedName) {
         const idx = getIndexByName(storedName);
@@ -65,9 +54,6 @@ export function WorkspaceProvider({ children, initialIndex = 0 }) {
       const name = navConfig.workspaces?.[activeIndex]?.name;
       window.localStorage.setItem(STORAGE_INDEX, String(activeIndex));
       if (name) window.localStorage.setItem(STORAGE_NAME, name);
-      const url = new URL(window.location.href);
-      if (name) url.hash = `ws=${encodeURIComponent(name)}`;
-      window.history.replaceState(null, "", url.toString());
     } catch {}
   }, [activeIndex]);
 

@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
@@ -21,7 +19,6 @@ export function WorkspaceSwitcher({ teams, brand, value, onValueChange }) {
   const { isMobile, state } = useSidebar();
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
-  const router = useRouter();
   const [uncontrolledIndex, setUncontrolledIndex] = React.useState(0);
   const index = typeof value === "number" ? value : uncontrolledIndex;
   const setIndex = onValueChange ?? setUncontrolledIndex;
