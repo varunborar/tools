@@ -39,10 +39,13 @@ export function CommandBar() {
   const redirectTo = React.useCallback(
     (href) => {
       if (!href) return;
+      const ws = (navConfig.workspaces ?? [])[activeIndex];
+      const basePath = ws?.basePath ?? "";
+      const prefixed = `${basePath || ""}${href.startsWith("/") ? href : `/${href}`}`;
       setOpen(false);
-      router.push(href);
+      router.push(prefixed);
     },
-    [router]
+    [router, activeIndex]
   );
 
   // Build redirect feature commands from the active workspace only

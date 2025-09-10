@@ -30,6 +30,16 @@ export function WorkspaceProvider({ children, initialIndex = 0 }) {
     };
     if (typeof window === "undefined") return initialIndex;
     try {
+      // Try to infer from current path's base segment
+      const pathname = window.location.pathname || "/";
+      const firstSeg = pathname.split("/").filter(Boolean)[0] || "";
+      if (firstSeg) {
+        const idxByBase = (navConfig.workspaces ?? []).findIndex((w) => {
+          const base = (w.basePath || "").replace(/^\//, "").split("/")[0];
+          return base && base.toLowerCase() === firstSeg.toLowerCase();
+        });
+        if (idxByBase >= 0) return clamp(idxByBase);
+      }
       const storedName = window.localStorage.getItem(STORAGE_NAME);
       if (storedName) {
         const idx = getIndexByName(storedName);

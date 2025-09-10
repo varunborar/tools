@@ -9,6 +9,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarGroup } from "@
 import socials from "@/config/socials.json" assert { type: "json" };
 import prefs from "@/config/user-preferences.json" assert { type: "json" };
 import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 
 export function NavUserPreferences() {
   const { theme, setTheme } = useTheme();
@@ -38,11 +39,11 @@ export function NavUserPreferences() {
                   if (item.type === "link") {
                     return (
                       <DropdownMenuItem key={`pref-${i}`} asChild>
-                        <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noreferrer" : undefined}>
+                        <Link href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noreferrer" : undefined}>
                           {item.icon === "Cog" && <Cog />}
                           {item.icon === "Coffee" && <Coffee />}
                           {item.label}
-                        </a>
+                        </Link>
                       </DropdownMenuItem>
                     );
                   }
@@ -67,11 +68,11 @@ export function NavUserPreferences() {
                   <DropdownMenuGroup>
                     {prefs.menu.filter((m) => m.group === "support").map((item, i) => (
                       <DropdownMenuItem key={`support-${i}`} asChild>
-                        <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noreferrer" : undefined}>
+                        <Link href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noreferrer" : undefined}>
                           {item.icon === "Coffee" && <Coffee />}
                           {item.icon === "Github" && <Lucide.Github />}
                           {item.label}
-                        </a>
+                        </Link>
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuGroup>
@@ -88,9 +89,9 @@ export function NavUserPreferences() {
           {socials.links?.map((link, i) => {
             const Icon = Lucide[link.icon] ?? Lucide.Link;
             return (
-              <a key={`social-${i}`} className="inline-flex items-center" href={link.href} target="_blank" rel="noreferrer">
+              <Link key={`social-${i}`} className="inline-flex items-center" href={link.href} target="_blank" rel="noreferrer">
                 <Icon className="size-4" />
-              </a>
+              </Link>
             );
           })}
         </div>
