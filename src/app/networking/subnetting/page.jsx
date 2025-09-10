@@ -9,17 +9,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useActions } from "@/contexts/actions"
 import { useSubnetting } from "@/hooks/networking/use-subnetting"
 import { Toaster } from "@/components/ui/sonner"
-import {
-  createLeafNode
-} from "@/lib/networking/subnetting/utils"
 
-export default function SubnettingPage() {
+function SubnettingContent() {
   const { setActions } = useActions();
   const {
     networkInput,
     maskInput,
-    baseNetwork,
-    baseMask,
     rows,
     visible,
     setNetworkInput,
@@ -143,6 +138,14 @@ export default function SubnettingPage() {
 
       <Toaster richColors position="bottom-center" />
     </div>
+  );
+}
+
+export default function SubnettingPage() {
+  return (
+    <React.Suspense fallback={<div className="p-4 text-sm opacity-70">Loading…</div>}>
+      <SubnettingContent />
+    </React.Suspense>
   );
 }
 
