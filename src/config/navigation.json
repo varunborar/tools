@@ -34,6 +34,24 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Applications",
+      "basePath": "/apps",
+      "logo": "AppWindowMac",
+      "plan": "Browser First Applications",
+      "sections": [
+        {
+          "label": "Productivity",
+          "services": [
+            {
+              "title": "To Do",
+              "href": "/todo",
+              "icon": "ListTodo"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

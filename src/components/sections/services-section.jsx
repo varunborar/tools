@@ -1,0 +1,48 @@
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { getLucideIconByName } from "@/lib/icon-map";
+
+export default function ServicesSection({ workspace, title = "Services", subtitle = "Explore available tools" }) {
+  const services = [];
+  for (const section of workspace?.sections ?? []) {
+    for (const service of section.services ?? []) {
+      services.push(service);
+    }
+  }
+
+  return (
+    <section className="space-y-3">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="text-sm text-muted-foreground">{subtitle}</p>
+      </div>
+      {services.length === 0 ? (
+        <div className="text-sm opacity-70">No services available.</div>
+      ) : (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((svc) => {
+            const Icon = svc.icon ? getLucideIconByName(svc.icon) : null;
+            const featureCount = Array.isArray(svc.features) ? svc.features.length : 0;
+            return (
+              <Link key={svc.href} href={svc.href} className="group block h-full">
+                <Card className="group h-full hover:bg-accent/40 transition-colors">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        {Icon ? <Icon /> : null}
+                        <div className="font-medium">{svc.title}</div>
+                      </div>
+                      {featureCount > 0 ? (
+                        <div className="text-xs text-muted-foreground">{featureCount} features</div>
+                      ) : null}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
