@@ -10,6 +10,22 @@ export default function ServicesSection({ workspace, title = "Services", subtitl
     }
   }
 
+  const basePath = (workspace?.basePath ?? "").trim();
+  const isExternal = (href) => /^https?:\/\//i.test(href || "");
+  const prefixHref = (href) => {
+    if (!href) return "#";
+    if (isExternal(href)) return href;
+    const base = basePath === "/" ? "" : basePath;
+    if (!base) {
+      return href.startsWith("/") ? href : `/${href}`;
+    }
+    if (href === base || href.startsWith(`${base}/`)) return href; // already prefixed
+    if (href.startsWith("/")) return `${base}${href}`;
+    const a = base.replace(/\/+$/g, "");
+    const b = href.replace(/^\/+/, "");
+    return `${a}/${b}`;
+  };
+
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
@@ -23,8 +39,9 @@ export default function ServicesSection({ workspace, title = "Services", subtitl
           {services.map((svc) => {
             const Icon = svc.icon ? getLucideIconByName(svc.icon) : null;
             const featureCount = Array.isArray(svc.features) ? svc.features.length : 0;
+            const finalHref = prefixHref(svc.href);
             return (
-              <Link key={svc.href} href={svc.href} className="group block h-full">
+              <Link key={svc.href} href={finalHref} className="group block h-full">
                 <Card className="group h-full hover:bg-accent/40 transition-colors">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between gap-3">
